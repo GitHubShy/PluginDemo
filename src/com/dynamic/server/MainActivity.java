@@ -53,10 +53,10 @@ public class MainActivity extends Activity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
-		public static final String url = "/mnt/sdcard/uxin/a.apk";
-		public static final String inUrl = "/mnt/sdcard/uxin/ZipView.zip";
-		public static final String outuUrl = "/mnt/sdcard/uxin/";
-		public String ViewUrl = "/mnt/sdcard/uxin/b.jar";
+		public String mPluginApkPath;
+//		public static final String inUrl = "/mnt/sdcard/uxin/ZipView.zip";
+//		public static final String outuUrl = "/mnt/sdcard/uxin/";
+		public String mPluginViewJarPath;
 		private RelativeLayout mRl;
 		private ImageView mIv;
 		private TextView mTv;
@@ -64,7 +64,12 @@ public class MainActivity extends Activity {
 
 		public PlaceholderFragment() {
 		}
-
+		@Override
+	    public void onCreate(Bundle savedInstanceState) {
+	        super.onCreate(savedInstanceState);
+	        mPluginApkPath = getActivity().getResources().getString(R.string.PLUGIN_APK_PATH);
+	        mPluginViewJarPath = getActivity().getResources().getString(R.string.PLUGIN_VIEW_JAR_PATH);
+	    }
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -74,7 +79,7 @@ public class MainActivity extends Activity {
 				
 				@Override
 				public void onClick(View v) {
-					DynamicUtils.launchTargetActivity(url, getActivity());
+					DynamicUtils.launchTargetActivity(mPluginApkPath, getActivity());
 				}
 			});
 			mRl.findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
@@ -93,7 +98,7 @@ public class MainActivity extends Activity {
 //					TextView tv = new TextView(getActivity());
 //					tv.setText("Hello World");
 //					mRl.addView(mZipView);
-					Object instance = DynamicUtils.launchView(ViewUrl, getActivity());
+					Object instance = DynamicUtils.launchView(mPluginViewJarPath, getActivity());
 					mZipView = (View) instance;
 					RelativeLayout.LayoutParams relLayoutParams=new RelativeLayout.LayoutParams(100,100);
 					mZipView.setLayoutParams(relLayoutParams);
@@ -102,7 +107,7 @@ public class MainActivity extends Activity {
 			});
 			mIv = (ImageView) mRl.findViewById(R.id.img);
 			mTv = (TextView) mRl.findViewById(R.id.title);
-			PackageInfo packageInfo = DynamicUtils.getPackageInfo(url, getActivity());
+			PackageInfo packageInfo = DynamicUtils.getPackageInfo(mPluginApkPath, getActivity());
 //			mIv.setImageResource(packageInfo.applicationInfo.icon);
 			mIv.setImageDrawable(getActivity().getPackageManager().getApplicationIcon(packageInfo.applicationInfo));
 			mTv.setText(getActivity().getPackageManager().getApplicationLabel(packageInfo.applicationInfo));
