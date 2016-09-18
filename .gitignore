@@ -1,0 +1,13 @@
+#过滤文件
+*.classpath
+*.project
+*proguard-project.txt
+*project.properties
+
+
+#过滤文件夹
+.settings/
+.svn/
+bin/
+gen/
+
