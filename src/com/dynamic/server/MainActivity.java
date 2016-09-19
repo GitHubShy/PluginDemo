@@ -1,34 +1,45 @@
 package com.dynamic.server;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import com.example.dynamicapk.R;
+import com.dynamic.fragment.PluginAPKFragment;
+import com.dynamic.fragment.PluginViewFragment;
+import com.shy.plugin.R;
 
 public class MainActivity extends Activity {
-
+	private RadioGroup mRadioGroup;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		mRadioGroup = (RadioGroup) findViewById(R.id.uirg_tabb);
+		initListener();
+		RadioButton childAt = (RadioButton) mRadioGroup.getChildAt(0);
+        childAt.setChecked(true);
 	}
+	protected void initListener() {
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.uirb_ride:
+                    	getFragmentManager().beginTransaction().replace(R.id.container,  new PluginViewFragment()).commit();
+                        break;
+                    case R.id.uirb_car:
+                    	getFragmentManager().beginTransaction().replace(R.id.container,  new PluginAPKFragment()).commit();
+                        break;
+                    case R.id.uirb_normal:
+                        break;
+                }
+            }
+        });
+    }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -48,72 +59,4 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-		public String mPluginApkPath;
-//		public static final String inUrl = "/mnt/sdcard/uxin/ZipView.zip";
-//		public static final String outuUrl = "/mnt/sdcard/uxin/";
-		public String mPluginViewJarPath;
-		private RelativeLayout mRl;
-		private ImageView mIv;
-		private TextView mTv;
-		private View mZipView;
-
-		public PlaceholderFragment() {
-		}
-		@Override
-	    public void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        mPluginApkPath = getActivity().getResources().getString(R.string.PLUGIN_APK_PATH);
-	        mPluginViewJarPath = getActivity().getResources().getString(R.string.PLUGIN_VIEW_JAR_PATH);
-	    }
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			mRl = (RelativeLayout) inflater.inflate(R.layout.fragment_main, container,
-					false);
-			mRl.findViewById(R.id.button1).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					DynamicUtils.launchTargetActivity(mPluginApkPath, getActivity());
-				}
-			});
-			mRl.findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-//					try {
-//						ZipUtils.UnZipFolder(inUrl, outuUrl);
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//					mZipView = new JarView(getActivity());
-//					mZipView.setBackgroundColor(color.black);
-//					RelativeLayout.LayoutParams relLayoutParams=new RelativeLayout.LayoutParams(100,100);
-//					mZipView.setLayoutParams(relLayoutParams);
-//					TextView tv = new TextView(getActivity());
-//					tv.setText("Hello World");
-//					mRl.addView(mZipView);
-					Object instance = DynamicUtils.launchView(mPluginViewJarPath, getActivity());
-					mZipView = (View) instance;
-					RelativeLayout.LayoutParams relLayoutParams=new RelativeLayout.LayoutParams(100,100);
-					mZipView.setLayoutParams(relLayoutParams);
-					mRl.addView(mZipView);
-				}
-			});
-			mIv = (ImageView) mRl.findViewById(R.id.img);
-			mTv = (TextView) mRl.findViewById(R.id.title);
-			PackageInfo packageInfo = DynamicUtils.getPackageInfo(mPluginApkPath, getActivity());
-//			mIv.setImageResource(packageInfo.applicationInfo.icon);
-			mIv.setImageDrawable(getActivity().getPackageManager().getApplicationIcon(packageInfo.applicationInfo));
-			mTv.setText(getActivity().getPackageManager().getApplicationLabel(packageInfo.applicationInfo));
-			return mRl;
-		}
-
-	}
-
 }

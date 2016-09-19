@@ -8,12 +8,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.dynamic.server.MainActivity$PlaceholderFragment" >
     <TextView
-        android:id="@+id/button2"
+        android:id="@+id/button1"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:layout_toRightOf="@id/button1"
-        android:layout_marginLeft="20dp"
         android:gravity="center"
         android:background="#00ff00"
-        android:text="launcher sdcard view" />
+        android:text="launcher activity" />
+    <ImageView 
+        android:id="@+id/img"
+        android:layout_centerInParent="true"
+        android:background="#ff0000"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+    <TextView 
+        android:id="@+id/title"
+        android:layout_below="@+id/img"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>
