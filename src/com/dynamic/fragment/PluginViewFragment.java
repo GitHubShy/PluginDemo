@@ -35,6 +35,16 @@ public class PluginViewFragment extends Fragment {
 			Bundle savedInstanceState) {
 		mRl = (RelativeLayout) inflater.inflate(R.layout.fragment_main,
 				container, false);
+		mRl.findViewById(R.id.button1).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						int index = mPluginViewJarPath.lastIndexOf("/");
+						String fileName = mPluginViewJarPath.substring(index + 1);
+						DynamicUtils.copyApkFromAssets(getActivity(), fileName, mPluginViewJarPath);
+					}
+				});
 		mRl.findViewById(R.id.button2).setOnClickListener(
 				new OnClickListener() {
 

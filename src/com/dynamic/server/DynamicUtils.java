@@ -133,6 +133,7 @@ public class DynamicUtils {
 	 */
 	public static boolean copyApkFromAssets(Context context, String fileName, String path) {
 	     boolean copyIsFinish = false;
+	     Log.e(TAG,"fileName="+fileName+"path="+path);
 	     try {
 	       InputStream is = context.getAssets().open(fileName);
 	       File file = new File(path);
@@ -141,6 +142,7 @@ public class DynamicUtils {
 	       byte[] temp = new byte[1024];
 	       int i = 0;
 	       while ((i = is.read(temp)) > 0) {
+	    	 Log.e(TAG,"i="+i);
 	         fos.write(temp, 0, i);
 	       }
 	       fos.close();
