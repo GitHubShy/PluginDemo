@@ -3,6 +3,7 @@
 *.project
 *proguard-project.txt
 *project.properties
+*.iml
 
 
 #过滤文件夹
@@ -10,4 +11,8 @@
 .svn/
 bin/
 gen/
+build/
+**/app/build/
+.gradle/
+.idea/
 
