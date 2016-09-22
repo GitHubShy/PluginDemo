@@ -4,7 +4,7 @@
 *proguard-project.txt
 *project.properties
 *.iml
-local.properties
+/local.properties
 
 
 #过滤文件夹
